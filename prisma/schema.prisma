@@ -1,0 +1,52 @@
+// This is your Prisma schema file.
+// Docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  // Neon: use a separate *unpooled* connection for migrations.
+  // See README for why these are two different env vars.
+  directUrl = env("DATABASE_URL_UNPOOLED")
+}
+
+enum Source {
+  imdb
+  letterboxd
+  metacritic
+  rt
+}
+
+enum Status {
+  wheel
+  watched
+}
+
+model Movie {
+  id         String   @id @default(uuid())
+  source     Source
+  rank       Int
+  title      String
+  year       Int
+  tmdbId     Int?
+  posterUrl  String?
+  backdropUrl String?
+  overview   String?  @db.Text
+  runtime    Int?
+  genres     String[] @default([])
+
+  status     Status   @default(wheel)
+  rating     Float?   // 0–5 in 0.5 steps, null = unrated
+  watchedAt  DateTime?
+
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  // A given source's rank is unique within that source — mirrors the old
+  // Mongoose compound unique index.
+  @@unique([source, rank], name: "source_rank_unique")
+  @@index([source, status])
+}

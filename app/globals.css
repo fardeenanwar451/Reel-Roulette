@@ -1,0 +1,82 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-display: "Fraunces", Georgia, serif;
+  --font-body: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: "JetBrains Mono", "SF Mono", monospace;
+}
+
+@font-face {
+  font-family: "Fraunces";
+  src: local("Fraunces");
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  background-color: #0b0710;
+  color: #f5f3ff;
+}
+
+body {
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: #6d28d9;
+  color: #f5f3ff;
+}
+
+/* Visible focus ring everywhere, for keyboard users */
+:focus-visible {
+  outline: 2px solid #a78bfa;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* subtle background texture: faint radial glow, not a default gradient blob */
+.bg-noise {
+  background-image: radial-gradient(
+      circle at 18% 8%,
+      rgba(124, 58, 237, 0.18),
+      transparent 40%
+    ),
+    radial-gradient(circle at 82% 92%, rgba(91, 33, 182, 0.14), transparent 45%);
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+/* Star rating fill — letterboxd-style half-star precision via clip */
+.star-fill-wrap {
+  position: relative;
+  display: inline-block;
+}
+.star-fill-wrap .star-bg,
+.star-fill-wrap .star-fg {
+  display: block;
+}
+.star-fill-wrap .star-fg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+}

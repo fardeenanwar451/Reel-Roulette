@@ -1,0 +1,11 @@
+node_modules/
+.env
+.env.local
+.next/
+out/
+dist/
+data/hydrated/
+.DS_Store
+npm-debug.log*
+
+# Prisma generates this client into node_modules; nothing to commit
